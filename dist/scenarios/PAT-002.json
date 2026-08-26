@@ -18,7 +18,12 @@
     "explicit_preferences": [
       "Wants his glasses and clock within view"
     ],
-    "dialogue_style": "Distractible, gives short answers and is uncertain where he is"
+    "dialogue_style": "Distractible, gives short answers and is uncertain where he is",
+    "nonverbal_palette": [
+      "David's attention drifts towards movement in the corridor before returning to the learner.",
+      "He frowns at the room and grips the edge of the bedcover.",
+      "There is a noticeable pause before he gives a short answer."
+    ]
   },
   "learning": {
     "outcomes": [
@@ -31,6 +36,25 @@
       "Assessing needs and planning care",
       "Improving safety and quality of care",
       "Coordinating care"
+    ]
+  },
+  "prebrief": {
+    "role": "You are the student nurse responding after noticing that David seems different from the handover description.",
+    "orientation": "Balance calm, respectful communication with recognition of a changing clinical picture. Describe actions and exact spoken words.",
+    "resources": [
+      "Synthetic handover",
+      "Educator-authored observation set after measurement",
+      "Local escalation placeholder and nursing-notes workspace"
+    ],
+    "limitations": [
+      "This prototype does not calculate a real early-warning score",
+      "Local escalation policy is represented by an educator-authored placeholder",
+      "AI cannot invent a diagnosis, cause or observation value"
+    ],
+    "ground_rules": [
+      "The scenario can be paused for psychological or educational safety",
+      "Respond to visible change rather than searching for scripted wording",
+      "Feedback is formative and requires educator interpretation"
     ]
   },
   "clinical": {
@@ -52,6 +76,28 @@
       "alertness": "new confusion"
     }
   },
+  "clinical_workspace": {
+    "handover": "David was described at handover as normally oriented, independently mobile and able to hold a sustained conversation. Staff have noticed a change during this shift.",
+    "environment": [
+      "Glasses are in the bedside drawer",
+      "A wall clock is visible from the bed",
+      "The assessment unit is busy and corridor movement is distracting"
+    ],
+    "available_resources": [
+      "Simulated identification record",
+      "Synthetic handover",
+      "Observation equipment represented in text",
+      "Local urgent-escalation placeholder",
+      "Nursing notes"
+    ],
+    "record_access": [
+      {
+        "title": "Baseline cognition in handover",
+        "state_key": "baseline_cognition_checked",
+        "content": "David is normally oriented, independent and able to hold a sustained conversation."
+      }
+    ]
+  },
   "initial_state": {
     "elapsed_minutes": 0,
     "identity_checked": false,
@@ -61,6 +107,14 @@
     "urgent_escalation_completed": false,
     "orientation_support_given": false,
     "deterioration_stage": 0,
+    "trust": 35,
+    "emotion_state": "unsettled",
+    "fatigue_level": 4,
+    "overload_level": 5,
+    "understanding_level": 1,
+    "confusion_level": 7,
+    "dignity_state": "preserved",
+    "consent_state": "not_asked",
     "revealed_cues": []
   },
   "time_events": [
@@ -71,7 +125,10 @@
         "urgent_escalation_completed": false
       },
       "effects": {
-        "deterioration_stage": 1
+        "deterioration_stage": 1,
+        "fatigue_level_delta": 2,
+        "confusion_level_delta": 1,
+        "emotion_state": "drowsy_and_unsettled"
       },
       "visible_cue": "David becomes more drowsy and needs his name repeated before responding."
     },
@@ -82,7 +139,11 @@
         "urgent_escalation_completed": false
       },
       "effects": {
-        "deterioration_stage": 2
+        "deterioration_stage": 2,
+        "fatigue_level_delta": 2,
+        "confusion_level_delta": 1,
+        "overload_level_delta": 1,
+        "emotion_state": "withdrawn"
       },
       "visible_cue": "Breathing appears faster and David gives only one-word replies."
     }
@@ -127,7 +188,11 @@
       "label": "Use calm orientation and make glasses and clock available",
       "preconditions": {},
       "effects": {
-        "orientation_support_given": true
+        "orientation_support_given": true,
+        "trust_delta": 8,
+        "overload_level_delta": -2,
+        "confusion_level_delta": -1,
+        "emotion_state": "briefly_reassured"
       },
       "reveals": [
         "David briefly attends and states his preferred name"
@@ -138,7 +203,8 @@
       "label": "Ask an appropriate registered colleague for immediate review",
       "preconditions": {},
       "effects": {
-        "senior_help_requested": true
+        "senior_help_requested": true,
+        "trust_delta": 3
       },
       "reveals": [
         "A colleague acknowledges the request"
@@ -165,7 +231,23 @@
       "Current deterioration stage",
       "Currently revealed cues",
       "Orientation support already provided",
+      "Bounded patient-experience state",
       "Student's exact words"
+    ],
+    "allowed_state_keys": [
+      "deterioration_stage",
+      "observations_measured",
+      "baseline_cognition_checked",
+      "senior_help_requested",
+      "urgent_escalation_completed",
+      "orientation_support_given",
+      "trust",
+      "emotion_state",
+      "fatigue_level",
+      "overload_level",
+      "understanding_level",
+      "confusion_level",
+      "dignity_state"
     ],
     "may_generate": [
       "Patient dialogue",
@@ -193,6 +275,28 @@
       "Learner leaves the deteriorating patient without arranging observation or assistance"
     ]
   },
+  "educator_rubric": [
+    {
+      "criterion_id": "recognition",
+      "label": "Recognition of acute change",
+      "guidance": "Connects the new confusion and changing visible cues with the need for prompt assessment."
+    },
+    {
+      "criterion_id": "communication",
+      "label": "Accessible, dignified communication",
+      "guidance": "Uses one short question at a time, offers orientation and avoids confrontation or infantilising language."
+    },
+    {
+      "criterion_id": "escalation",
+      "label": "Timely escalation",
+      "guidance": "Obtains the authored information needed and uses the local approved escalation placeholder without avoidable delay."
+    },
+    {
+      "criterion_id": "continuity",
+      "label": "Observation while awaiting help",
+      "guidance": "Maintains proportionate observation, safety and communication while help is being arranged."
+    }
+  ],
   "debrief": {
     "prompts": [
       "Which cues suggested an acute rather than established change?",
@@ -245,6 +349,51 @@
           "deterioration_stage": 2
         }
       }
-    ]
+    ],
+    "action_phrases": {
+      "check_identity": [
+        "check identity",
+        "confirm identity",
+        "check wristband",
+        "two identifiers"
+      ],
+      "measure_observations": [
+        "measure observations",
+        "take observations",
+        "check observations",
+        "check vital signs",
+        "take vital signs",
+        "complete observation set"
+      ],
+      "check_baseline_cognition": [
+        "check baseline cognition",
+        "establish baseline cognition",
+        "review handover",
+        "check if confusion is new",
+        "usual cognition"
+      ],
+      "provide_orientation_support": [
+        "provide orientation",
+        "orientate patient",
+        "orientation support",
+        "show him the clock",
+        "make glasses available",
+        "reduce confusion"
+      ],
+      "request_senior_help": [
+        "request senior help",
+        "ask senior for help",
+        "get senior help",
+        "request immediate review",
+        "ask registered colleague"
+      ],
+      "escalate_urgent_concern": [
+        "escalate urgent concern",
+        "urgent escalation",
+        "escalate deterioration",
+        "call emergency team",
+        "use escalation pathway"
+      ]
+    }
   }
 }

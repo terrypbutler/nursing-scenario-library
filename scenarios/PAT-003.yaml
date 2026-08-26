@@ -16,6 +16,10 @@ patient:
   - Wants personal-care discussions conducted with the curtain closed
   - Would like her chosen family member involved only after she gives permission
   dialogue_style: Warm but embarrassed; may agree quickly when overloaded
+  nonverbal_palette:
+  - Aisha glances towards the curtain before answering.
+  - She nods quickly, then hesitates as if reconsidering what she has understood.
+  - Her shoulders relax a little when the conversation slows down.
 learning:
   outcomes:
   - Create privacy and seek permission before a sensitive discussion
@@ -26,6 +30,23 @@ learning:
   - Being an accountable professional
   - Providing and evaluating care
   - Coordinating care
+prebrief:
+  role: You are the student nurse checking whether Aisha is ready for discharge education after a new
+    simulated stoma.
+  orientation: Create the conditions for a sensitive conversation, explore what matters and distinguish
+    agreement from demonstrated understanding.
+  resources:
+  - Synthetic discharge handover
+  - Folded educator-authored leaflet represented in text
+  - Specialist-review pathway placeholder and nursing notes
+  limitations:
+  - The app does not teach or assess a real stoma-care procedure
+  - Only educator-authored discharge facts can be revealed
+  - AI cannot clear discharge or create new complications
+  ground_rules:
+  - Sensitive information should be handled with privacy and permission
+  - Treat apparent agreement as something to explore, not proof of understanding
+  - Use debrief to examine uncertainty without automatic pass or fail
 clinical:
   presenting_context: Preparing for discharge after formation of a new simulated stoma
   visible_at_start:
@@ -35,6 +56,19 @@ clinical:
   allergy_record: Not relevant to this conversation scenario
   prescribed_items: []
   baseline_observations: {}
+clinical_workspace:
+  handover: Aisha may be discharged after the planned education and specialist review. She has said she
+    is ready, but the leaflet is still folded and no teach-back has been documented.
+  environment:
+  - Curtain is open to the bay
+  - A folded discharge leaflet is on the bedside table
+  - A visitor may be invited only if Aisha chooses
+  available_resources:
+  - Educator-authored discharge leaflet
+  - Private discussion space
+  - Specialist stoma-review placeholder
+  - Nursing notes
+  record_access: []
 initial_state:
   elapsed_minutes: 0
   privacy_created: false
@@ -45,6 +79,12 @@ initial_state:
   understanding_level: 1
   overload_level: 2
   family_permission: not_asked
+  trust: 40
+  emotion_state: embarrassed
+  fatigue_level: 2
+  confusion_level: 0
+  dignity_state: vulnerable
+  consent_state: not_asked
   revealed_cues: []
 time_events:
 - event_id: rushed_agreement
@@ -54,6 +94,8 @@ time_events:
     teach_back_used: false
   effects:
     overload_level: 4
+    trust_delta: -3
+    emotion_state: overwhelmed
   visible_cue: Aisha nods repeatedly but cannot describe the first step she would take at home.
 allowed_actions:
 - action_id: create_privacy
@@ -61,6 +103,8 @@ allowed_actions:
   preconditions: {}
   effects:
     privacy_created: true
+    dignity_state: protected
+    trust_delta: 6
   reveals: []
 - action_id: seek_discussion_permission
   label: Ask permission to discuss stoma care
@@ -68,6 +112,8 @@ allowed_actions:
     privacy_created: true
   effects:
     permission_for_discussion: true
+    consent_state: accepted
+    trust_delta: 2
   reveals:
   - Aisha agrees to the discussion
   blocked_message: Aisha looks towards the open curtain and asks for privacy first.
@@ -78,6 +124,8 @@ allowed_actions:
   effects:
     concerns_explored: true
     overload_level_delta: -1
+    trust_delta: 7
+    emotion_state: relieved_to_be_asked
   reveals:
   - Aisha is worried about leakage while outside the house
 - action_id: explain_in_chunks
@@ -87,6 +135,7 @@ allowed_actions:
   effects:
     information_chunked: true
     understanding_level_delta: 1
+    overload_level_delta: -1
   reveals:
   - Use only educator-authored discharge content
 - action_id: use_teach_back
@@ -95,6 +144,8 @@ allowed_actions:
     information_chunked: true
   effects:
     teach_back_used: true
+    understanding_level_delta: 1
+    emotion_state: thoughtful
   reveals:
   - Aisha recalls routine care but is unsure whom to contact about a problem
   blocked_message: Provide a short, authored explanation before checking recall.
@@ -121,7 +172,23 @@ ai_contract:
   - Currently revealed concerns
   - Understanding and overload levels
   - Privacy and family-permission states
+  - Bounded patient-experience state
   - Student's exact words
+  allowed_state_keys:
+  - privacy_created
+  - permission_for_discussion
+  - concerns_explored
+  - information_chunked
+  - teach_back_used
+  - understanding_level
+  - overload_level
+  - family_permission
+  - trust
+  - emotion_state
+  - fatigue_level
+  - confusion_level
+  - dignity_state
+  - consent_state
   may_generate:
   - Patient dialogue
   - Embarrassment or relief
@@ -144,6 +211,19 @@ facilitator_only:
   - An identified knowledge gap leads to appropriate review
   pause_triggers:
   - Learner shares information with a family member without Aisha's permission
+educator_rubric:
+- criterion_id: privacy_permission
+  label: Privacy and permission
+  guidance: Creates privacy and confirms Aisha is willing to discuss sensitive care before proceeding.
+- criterion_id: priorities
+  label: Exploration of priorities
+  guidance: Elicits Aisha's practical concern instead of relying on her initial reassurance.
+- criterion_id: health_literacy
+  label: Chunking and teach-back
+  guidance: Uses short sections and checks understanding in a non-testing, non-shaming way.
+- criterion_id: coordination
+  label: Appropriate coordination
+  guidance: Responds to the revealed knowledge gap and respects Aisha's choice about family involvement.
 debrief:
   prompts:
   - What was the difference between agreement and demonstrated understanding?
@@ -180,3 +260,42 @@ dialogue:
   - fact: She has chosen to involve her sister in the final review.
     when:
       family_permission: accepted
+  action_phrases:
+    create_privacy:
+    - create privacy
+    - provide privacy
+    - close the curtains
+    - private discussion
+    seek_discussion_permission:
+    - ask permission to discuss
+    - seek permission to discuss
+    - ask if we can talk
+    - permission to talk
+    explore_concerns:
+    - explore concerns
+    - ask about concerns
+    - ask what matters
+    - managing at home
+    - worries about home
+    explain_in_chunks:
+    - explain in chunks
+    - one step at a time
+    - break down explanation
+    - explain care step
+    use_teach_back:
+    - use teach back
+    - teach back
+    - explain in her own words
+    - repeat the plan
+    - check understanding
+    seek_family_permission:
+    - ask about family involvement
+    - involve family
+    - family member involved
+    - seek family permission
+    - ask about her sister
+    arrange_specialist_review:
+    - arrange specialist review
+    - request specialist review
+    - refer to stoma nurse
+    - specialist before discharge

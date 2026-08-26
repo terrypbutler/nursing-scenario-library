@@ -20,7 +20,12 @@
       "Prefers to wash his face and upper body independently",
       "Wants the door closed before personal care"
     ],
-    "dialogue_style": "Direct and friendly when he can hear; becomes quiet if rushed"
+    "dialogue_style": "Direct and friendly when he can hear; becomes quiet if rushed",
+    "nonverbal_palette": [
+      "Mr Chen tilts his better ear towards the learner and watches their face closely.",
+      "He reaches for the washcloth before answering.",
+      "His shoulders tense and he raises one hand slightly."
+    ]
   },
   "learning": {
     "outcomes": [
@@ -35,6 +40,25 @@
       "Providing and evaluating care"
     ]
   },
+  "prebrief": {
+    "role": "You are the student nurse supporting Mr Chen with morning personal care on the rehabilitation ward.",
+    "orientation": "Make communication accessible, establish what help is wanted and respond to consent as an ongoing process.",
+    "resources": [
+      "Synthetic rehabilitation handover",
+      "Bedside environment and hearing-support cues",
+      "Privacy controls represented in text and nursing notes"
+    ],
+    "limitations": [
+      "No physical personal-care procedure is performed",
+      "The app represents consent and environment through authored state",
+      "AI cannot infer capacity, new impairment or a care procedure"
+    ],
+    "ground_rules": [
+      "Describe only assistance you would provide with permission",
+      "Hearing access must not be treated as a measure of cognition",
+      "The encounter may be paused and is followed by facilitated debrief"
+    ]
+  },
   "clinical": {
     "presenting_context": "Requires some assistance with lower-body washing after reduced mobility",
     "visible_at_start": [
@@ -46,6 +70,22 @@
     "prescribed_items": [],
     "baseline_observations": {}
   },
+  "clinical_workspace": {
+    "handover": "Mr Chen is regaining mobility and needs some lower-body assistance. He usually manages his face and upper body independently and uses hearing aids.",
+    "environment": [
+      "Television is on",
+      "Door is open",
+      "One hearing aid appears loose",
+      "Washcloth and toiletries are within reach"
+    ],
+    "available_resources": [
+      "Private care space represented in text",
+      "Hearing-support check",
+      "Call bell",
+      "Nursing notes"
+    ],
+    "record_access": []
+  },
   "initial_state": {
     "elapsed_minutes": 0,
     "noise_reduced": false,
@@ -56,6 +96,13 @@
     "independence_supported": false,
     "care_started": false,
     "care_paused": false,
+    "trust": 45,
+    "emotion_state": "frustrated_by_noise",
+    "fatigue_level": 2,
+    "overload_level": 4,
+    "understanding_level": 3,
+    "confusion_level": 0,
+    "dignity_state": "vulnerable",
     "revealed_cues": []
   },
   "time_events": [
@@ -66,7 +113,9 @@
         "care_started": true
       },
       "effects": {
-        "consent_state": "withdrawn"
+        "consent_state": "withdrawn",
+        "emotion_state": "uncomfortable",
+        "trust_delta": -2
       },
       "visible_cue": "Mr Chen raises his hand and says, 'Stop a moment, please.'"
     }
@@ -77,7 +126,10 @@
       "label": "Reduce background noise and face Mr Chen",
       "preconditions": {},
       "effects": {
-        "noise_reduced": true
+        "noise_reduced": true,
+        "overload_level_delta": -2,
+        "trust_delta": 4,
+        "emotion_state": "more_at_ease"
       },
       "reveals": []
     },
@@ -86,7 +138,8 @@
       "label": "Ask whether Mr Chen wants help checking his hearing aid",
       "preconditions": {},
       "effects": {
-        "hearing_support_checked": true
+        "hearing_support_checked": true,
+        "trust_delta": 5
       },
       "reveals": [
         "Mr Chen accepts help reseating the loose hearing aid"
@@ -97,7 +150,9 @@
       "label": "Close the door and prepare the private care space",
       "preconditions": {},
       "effects": {
-        "privacy_created": true
+        "privacy_created": true,
+        "dignity_state": "protected",
+        "trust_delta": 4
       },
       "reveals": []
     },
@@ -109,7 +164,9 @@
       },
       "effects": {
         "preferences_checked": true,
-        "independence_supported": true
+        "independence_supported": true,
+        "trust_delta": 8,
+        "emotion_state": "engaged"
       },
       "reveals": [
         "Mr Chen wants to wash his face and upper body himself"
@@ -124,7 +181,8 @@
         "preferences_checked": true
       },
       "effects": {
-        "consent_state": "accepted"
+        "consent_state": "accepted",
+        "trust_delta": 5
       },
       "reveals": [
         "Mr Chen agrees to limited assistance with lower-body care"
@@ -150,7 +208,10 @@
         "consent_state": "withdrawn"
       },
       "effects": {
-        "care_paused": true
+        "care_paused": true,
+        "trust_delta": 8,
+        "emotion_state": "relieved",
+        "dignity_state": "preserved"
       },
       "reveals": [
         "Mr Chen says the water feels too cold and wants a pause"
@@ -164,7 +225,25 @@
       "Environmental adjustments already made",
       "Privacy, preferences and consent states",
       "Currently revealed cues",
+      "Bounded patient-experience state",
       "Student's exact words"
+    ],
+    "allowed_state_keys": [
+      "noise_reduced",
+      "hearing_support_checked",
+      "privacy_created",
+      "preferences_checked",
+      "consent_state",
+      "independence_supported",
+      "care_started",
+      "care_paused",
+      "trust",
+      "emotion_state",
+      "fatigue_level",
+      "overload_level",
+      "understanding_level",
+      "confusion_level",
+      "dignity_state"
     ],
     "may_generate": [
       "Patient dialogue",
@@ -194,6 +273,28 @@
       "Learner continues personal care after the withdrawal cue"
     ]
   },
+  "educator_rubric": [
+    {
+      "criterion_id": "access",
+      "label": "Accessible communication",
+      "guidance": "Reduces avoidable noise, faces Mr Chen and checks hearing support without making cognitive assumptions."
+    },
+    {
+      "criterion_id": "autonomy",
+      "label": "Choice and independence",
+      "guidance": "Asks what Mr Chen wants to do himself and limits assistance to what he requests."
+    },
+    {
+      "criterion_id": "privacy_consent",
+      "label": "Privacy and ongoing consent",
+      "guidance": "Creates privacy, explains the proposed help and treats consent as revisable throughout."
+    },
+    {
+      "criterion_id": "withdrawal",
+      "label": "Response to withdrawal",
+      "guidance": "Stops immediately when asked and explores what Mr Chen needs before any further care."
+    }
+  ],
   "debrief": {
     "prompts": [
       "Which environmental change most improved communication?",
@@ -241,6 +342,55 @@
           "consent_state": "withdrawn"
         }
       }
-    ]
+    ],
+    "action_phrases": {
+      "reduce_noise": [
+        "reduce noise",
+        "turn down television",
+        "turn off television",
+        "reduce background noise",
+        "face the patient"
+      ],
+      "check_hearing_support": [
+        "check hearing aid",
+        "help with hearing aid",
+        "hearing support",
+        "ask about hearing aid"
+      ],
+      "create_privacy": [
+        "create privacy",
+        "provide privacy",
+        "close the door",
+        "private care space"
+      ],
+      "check_preferences": [
+        "check preferences",
+        "ask his preferences",
+        "ask what he can do",
+        "ask what he wants to do",
+        "independent care"
+      ],
+      "seek_consent": [
+        "seek consent",
+        "ask for consent",
+        "gain consent",
+        "obtain consent",
+        "ask permission to help"
+      ],
+      "start_agreed_care": [
+        "start agreed care",
+        "begin agreed care",
+        "start personal care",
+        "provide agreed assistance",
+        "help with lower body"
+      ],
+      "pause_on_withdrawal": [
+        "stop care",
+        "pause care",
+        "withdraws consent",
+        "withdrawal of consent",
+        "ask what he needs"
+      ]
+    }
   }
 }

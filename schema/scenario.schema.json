@@ -5,8 +5,9 @@
   "required": [
     "case_id", "scenario_version", "publication_status", "review", "title",
     "synthetic_data_notice", "field", "setting", "patient", "learning",
-    "clinical", "initial_state", "time_events", "allowed_actions",
-    "ai_contract", "dialogue", "facilitator_only", "debrief"
+    "prebrief", "clinical", "clinical_workspace", "initial_state", "time_events",
+    "allowed_actions", "ai_contract", "dialogue", "facilitator_only",
+    "educator_rubric", "debrief"
   ],
   "properties": {
     "case_id": {"type": "string", "pattern": "^PAT-[0-9]{3}$"},
@@ -21,7 +22,15 @@
     "estimated_duration_minutes": {"type": "integer", "minimum": 5, "maximum": 60},
     "patient": {"type": "object"},
     "learning": {"type": "object"},
+    "prebrief": {
+      "type": "object",
+      "required": ["role", "orientation", "resources", "limitations", "ground_rules"]
+    },
     "clinical": {"type": "object"},
+    "clinical_workspace": {
+      "type": "object",
+      "required": ["handover", "environment", "available_resources", "record_access"]
+    },
     "initial_state": {"type": "object"},
     "time_events": {"type": "array"},
     "allowed_actions": {
@@ -33,14 +42,15 @@
     },
     "ai_contract": {
       "type": "object",
-      "required": ["allowed_context", "may_generate", "must_not_generate"]
+      "required": ["allowed_context", "allowed_state_keys", "may_generate", "must_not_generate"]
     },
     "dialogue": {
       "type": "object",
-      "required": ["opening_line", "action_responses", "fallback_responses", "facts"],
+      "required": ["opening_line", "action_responses", "action_phrases", "fallback_responses", "facts"],
       "properties": {
         "opening_line": {"type": "string", "minLength": 1},
         "action_responses": {"type": "object"},
+        "action_phrases": {"type": "object"},
         "fallback_responses": {
           "type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}
         },
@@ -48,6 +58,7 @@
       }
     },
     "facilitator_only": {"type": "object"},
+    "educator_rubric": {"type": "array", "minItems": 3},
     "debrief": {
       "type": "object",
       "required": ["automatic_competence_decision"]

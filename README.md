@@ -18,7 +18,10 @@ educational review**. Never add real patient information.
 5. Run the validation and build commands below.
 6. Commit and push the change with GitHub Desktop.
 
-Every action must have a matching entry under `dialogue.action_responses`.
+Every action must have matching entries under `dialogue.action_responses` and
+`dialogue.action_phrases`. Portable scenarios also carry the Studio prebrief,
+clinical workspace, non-verbal palette and educator rubric, so advanced
+simulation features do not live inside the application code.
 Dialogue facts may have `when` conditions, but the AI cannot apply effects or
 change clinical state. State changes remain deterministic and must be authored
 under `allowed_actions` or `time_events`.
@@ -31,7 +34,7 @@ py -m venv .venv
 .\.venv\Scripts\python tools\build_library.py
 ```
 
-The app consumes `dist/library.json`. A build stops if a scenario is malformed,
+Nurse Simulation Studio consumes `dist/library.json`. A build stops if a scenario is malformed,
 contains direct-identity fields, has incomplete dialogue responses, permits
 unsafe AI content or enables automatic competence decisions.
 

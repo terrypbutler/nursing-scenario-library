@@ -19,16 +19,34 @@ patient:
   communication_needs: []
   explicit_preferences: []
   dialogue_style: Calm, everyday UK English
+  nonverbal_palette:
+    - The patient makes eye contact and waits for the nurse to continue.
 learning:
   outcomes:
     - Replace with an observable learning outcome
   nmc_platforms: []
+prebrief:
+  role: You are the nurse beginning a focused interaction with this fictional patient.
+  orientation: Review the visible information, communicate naturally and use only the simulated resources.
+  resources:
+    - Fictional handover and patient record
+  limitations:
+    - Only educator-authored state changes can occur
+  ground_rules:
+    - Treat the simulation as a supervised learning activity
 clinical:
   presenting_context: Replace with the learner-visible context
   visible_at_start:
     - Replace with a visible starting cue
   baseline_observations: {}
   prescribed_items: []
+clinical_workspace:
+  handover: A fictional patient is awaiting a focused nursing interaction.
+  environment:
+    - Simulated ward area
+  available_resources:
+    - Fictional patient record
+  record_access: []
 initial_state:
   elapsed_minutes: 0
   revealed_cues: []
@@ -45,6 +63,10 @@ dialogue:
   opening_line: Hello. Are you the nurse looking after me?
   action_responses:
     introduce_self: Hello. Please call me by my first name.
+  action_phrases:
+    introduce_self:
+      - introduce myself
+      - confirm preferred name
   fallback_responses:
     - Could you ask me one question at a time, please?
   facts:
@@ -53,6 +75,8 @@ dialogue:
 ai_contract:
   allowed_context:
     - Authored patient details and currently revealed cues
+  allowed_state_keys:
+    - trust
   may_generate:
     - Natural patient speech grounded in the authored facts
   must_not_generate:
@@ -63,6 +87,16 @@ ai_contract:
 facilitator_only:
   notes:
     - Replace with facilitator guidance
+educator_rubric:
+  - criterion_id: communication
+    label: Communication
+    guidance: Uses clear, respectful wording suited to the patient's communication needs.
+  - criterion_id: consent
+    label: Consent and dignity
+    guidance: Seeks agreement and protects dignity throughout the interaction.
+  - criterion_id: safety
+    label: Safety and relevance
+    guidance: Chooses actions that are safe and relevant to the authored situation.
 debrief:
   prompts:
     - What went well in the interaction?

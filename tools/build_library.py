@@ -43,6 +43,17 @@ def safety_errors(case: dict, source: Path) -> list[str]:
     forbidden = {str(key).casefold() for key in patient} & FORBIDDEN_IDENTITY_KEYS
     if forbidden:
         errors.append(f"{prefix}: direct identity fields are forbidden: {sorted(forbidden)}")
+    if not patient.get("nonverbal_palette"):
+        errors.append(f"{prefix}: patient needs an educator-authored nonverbal palette")
+
+    prebrief = case.get("prebrief", {})
+    for key in ("role", "orientation", "resources", "limitations", "ground_rules"):
+        if not prebrief.get(key):
+            errors.append(f"{prefix}: prebrief is missing {key}")
+    workspace = case.get("clinical_workspace", {})
+    for key in ("handover", "environment", "available_resources", "record_access"):
+        if key not in workspace:
+            errors.append(f"{prefix}: clinical workspace is missing {key}")
 
     actions = case.get("allowed_actions", [])
     action_ids = [item.get("action_id") for item in actions]
@@ -54,6 +65,10 @@ def safety_errors(case: dict, source: Path) -> list[str]:
         errors.append(
             f"{prefix}: missing dialogue responses for {sorted(missing_responses)}"
         )
+    action_phrases = case.get("dialogue", {}).get("action_phrases", {})
+    missing_phrases = set(action_ids) - set(action_phrases)
+    if missing_phrases:
+        errors.append(f"{prefix}: missing action phrases for {sorted(missing_phrases)}")
 
     for item in case.get("clinical", {}).get("prescribed_items", []):
         if set(item) != {"order_id", "display_text", "dose_source"}:
@@ -71,6 +86,16 @@ def safety_errors(case: dict, source: Path) -> list[str]:
     for concept in REQUIRED_AI_PROHIBITIONS:
         if concept not in prohibited:
             errors.append(f"{prefix}: AI prohibition must mention {concept}")
+    allowed_state_keys = case.get("ai_contract", {}).get("allowed_state_keys", [])
+    unknown_state_keys = set(allowed_state_keys) - set(case.get("initial_state", {}))
+    if unknown_state_keys:
+        errors.append(
+            f"{prefix}: AI contract references unknown state keys {sorted(unknown_state_keys)}"
+        )
+    rubric = case.get("educator_rubric", [])
+    rubric_ids = [item.get("criterion_id") for item in rubric]
+    if len(rubric) < 3 or len(rubric_ids) != len(set(rubric_ids)):
+        errors.append(f"{prefix}: educator rubric needs at least 3 unique criteria")
     if case.get("debrief", {}).get("automatic_competence_decision") is not False:
         errors.append(f"{prefix}: automatic competence decisions must be false")
     return errors

@@ -18,7 +18,12 @@
       "Wants to remain alert when her daughter visits",
       "Would like options explained before deciding"
     ],
-    "dialogue_style": "Polite, concise and initially cautious about strong pain relief"
+    "dialogue_style": "Polite, concise and initially cautious about strong pain relief",
+    "nonverbal_palette": [
+      "Mrs Shaw pauses before answering and keeps one hand protectively over her operated side.",
+      "Her expression softens slightly, although she still avoids moving.",
+      "She glances towards the bedside clock before looking back at the learner."
+    ]
   },
   "learning": {
     "outcomes": [
@@ -31,6 +36,25 @@
       "Assessing needs and planning care",
       "Providing and evaluating care",
       "Improving safety and quality of care"
+    ]
+  },
+  "prebrief": {
+    "role": "You are the student nurse beginning a focused pain and comfort review with Mrs Shaw.",
+    "orientation": "Work as you would in a supervised ward encounter. Describe physical actions and write the exact words you would use.",
+    "resources": [
+      "Synthetic handover and bedside environment",
+      "Simulated allergy and prescription records after you choose to check them",
+      "Observation chart and nursing-notes workspace"
+    ],
+    "limitations": [
+      "No physical equipment is operated in this text prototype",
+      "All medicine details remain on the educator-controlled simulated chart",
+      "AI wording can vary, but clinical facts and effects cannot"
+    ],
+    "ground_rules": [
+      "Pause if you feel uncomfortable and use the debrief for questions",
+      "Treat the patient as a person rather than trying to guess keywords",
+      "This is formative rehearsal, not an automatic competence assessment"
     ]
   },
   "clinical": {
@@ -58,6 +82,33 @@
       "alertness": "alert"
     }
   },
+  "clinical_workspace": {
+    "handover": "Day one after an uncomplicated simulated hip replacement. Mrs Shaw has reported increasing discomfort with movement and wants to remain alert for a family visit.",
+    "environment": [
+      "Call bell is within reach",
+      "Reading glasses are on the bedside table",
+      "Mrs Shaw is lying still and protecting the operated side"
+    ],
+    "available_resources": [
+      "Simulated identification record",
+      "Simulated allergy record",
+      "Simulated prescription chart",
+      "Observation chart",
+      "Nursing notes"
+    ],
+    "record_access": [
+      {
+        "title": "Allergy record",
+        "state_key": "allergies_checked",
+        "content": "No known medicine allergies recorded on the simulated chart"
+      },
+      {
+        "title": "Prescription chart",
+        "state_key": "prescription_checked",
+        "content": "SIM-PRN-ANALGESIA-01: educator-approved postoperative analgesia option. Read any administration detail only from the simulated chart."
+      }
+    ]
+  },
   "initial_state": {
     "elapsed_minutes": 0,
     "identity_checked": false,
@@ -70,6 +121,12 @@
     "analgesia_administered": false,
     "reassessed": false,
     "trust": 45,
+    "emotion_state": "cautious",
+    "fatigue_level": 3,
+    "overload_level": 2,
+    "understanding_level": 2,
+    "confusion_level": 0,
+    "dignity_state": "preserved",
     "revealed_cues": []
   },
   "time_events": [
@@ -81,7 +138,9 @@
       },
       "effects": {
         "pain_score": 8,
-        "trust_delta": -5
+        "trust_delta": -5,
+        "fatigue_level_delta": 1,
+        "emotion_state": "strained"
       },
       "visible_cue": "Mrs Shaw shifts, grimaces and grips the bed sheet."
     },
@@ -92,7 +151,9 @@
         "analgesia_administered": true,
         "reassessed": false
       },
-      "effects": {},
+      "effects": {
+        "emotion_state": "expectant"
+      },
       "visible_cue": "Mrs Shaw looks towards the nurse as if expecting a review."
     }
   ],
@@ -112,7 +173,8 @@
       "preconditions": {},
       "effects": {
         "pain_score_known": true,
-        "trust_delta": 5
+        "trust_delta": 5,
+        "emotion_state": "heard"
       },
       "reveals": [
         "Current pain score is 7 out of 10",
@@ -143,7 +205,10 @@
       },
       "effects": {
         "options_explained": true,
-        "trust_delta": 10
+        "trust_delta": 10,
+        "understanding_level_delta": 2,
+        "overload_level_delta": -1,
+        "emotion_state": "cautiously_reassured"
       },
       "reveals": [
         "Mrs Shaw is worried that pain relief will make her too sleepy"
@@ -157,7 +222,8 @@
         "options_explained": true
       },
       "effects": {
-        "consent_state": "accepted"
+        "consent_state": "accepted",
+        "trust_delta": 4
       },
       "reveals": [
         "Mrs Shaw agrees after her concern has been addressed"
@@ -187,7 +253,9 @@
       },
       "effects": {
         "pain_score": 4,
-        "reassessed": true
+        "reassessed": true,
+        "emotion_state": "more_comfortable",
+        "fatigue_level_delta": -1
       },
       "reveals": [
         "Authored reassessment pain score is 4 out of 10"
@@ -201,7 +269,24 @@
       "Currently revealed cues",
       "Current pain score only after it is revealed",
       "Consent state",
+      "Bounded patient-experience state",
       "Student's exact words"
+    ],
+    "allowed_state_keys": [
+      "pain_score",
+      "consent_state",
+      "trust",
+      "emotion_state",
+      "fatigue_level",
+      "overload_level",
+      "understanding_level",
+      "confusion_level",
+      "dignity_state",
+      "identity_checked",
+      "allergies_checked",
+      "prescription_checked",
+      "analgesia_administered",
+      "reassessed"
     ],
     "may_generate": [
       "Patient dialogue",
@@ -230,6 +315,28 @@
       "Learner attempts administration despite refusal or missing checks"
     ]
   },
+  "educator_rubric": [
+    {
+      "criterion_id": "assessment",
+      "label": "Person-centred pain assessment",
+      "guidance": "Elicits the nature and impact of pain while responding to what matters to Mrs Shaw."
+    },
+    {
+      "criterion_id": "medicines_safety",
+      "label": "Simulated medicines safety",
+      "guidance": "Uses identity, allergy and prescription checks before any simulated administration."
+    },
+    {
+      "criterion_id": "choice",
+      "label": "Explanation, choice and consent",
+      "guidance": "Addresses alertness concerns, checks understanding and avoids pressuring the decision."
+    },
+    {
+      "criterion_id": "review",
+      "label": "Reassessment and communication",
+      "guidance": "Reviews comfort after the authored interval and identifies what should be documented or escalated."
+    }
+  ],
   "debrief": {
     "prompts": [
       "What information influenced Mrs Shaw's decision?",
@@ -281,6 +388,57 @@
           "reassessed": true
         }
       }
-    ]
+    ],
+    "action_phrases": {
+      "check_identity": [
+        "check identity",
+        "confirm identity",
+        "check wristband",
+        "two identifiers"
+      ],
+      "assess_pain": [
+        "assess pain",
+        "ask about pain",
+        "pain assessment",
+        "pain score"
+      ],
+      "check_allergies_and_prescription": [
+        "check allergies",
+        "check allergy record",
+        "check prescription",
+        "check medication chart",
+        "check medicine chart",
+        "check drug chart"
+      ],
+      "explain_analgesia": [
+        "explain analgesia",
+        "explain pain relief",
+        "discuss pain relief",
+        "explain charted option",
+        "invite questions"
+      ],
+      "seek_consent": [
+        "seek consent",
+        "ask for consent",
+        "gain consent",
+        "obtain consent",
+        "ask if she accepts",
+        "ask if she wants pain relief"
+      ],
+      "administer_charted_option": [
+        "administer charted option",
+        "administer analgesia",
+        "give pain relief",
+        "give analgesia",
+        "record administration"
+      ],
+      "reassess_pain": [
+        "reassess pain",
+        "review pain",
+        "check pain again",
+        "recheck pain",
+        "reassess comfort"
+      ]
+    }
   }
 }
