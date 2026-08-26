@@ -1,0 +1,178 @@
+case_id: PAT-004
+title: Personal care, accessible communication and withdrawn consent
+synthetic_data_notice: Entirely fictional training case
+field: adult nursing
+setting: rehabilitation ward
+complexity: introductory
+estimated_duration_minutes: 15
+patient:
+  display_name: Peter Chen
+  age: 62
+  pronouns: he/him
+  preferred_address: Mr Chen
+  communication_needs:
+  - Uses hearing aids
+  - Needs the speaker to face him and reduce background noise
+  - Do not assume agreement when he has not heard a question
+  explicit_preferences:
+  - Prefers to wash his face and upper body independently
+  - Wants the door closed before personal care
+  dialogue_style: Direct and friendly when he can hear; becomes quiet if rushed
+learning:
+  outcomes:
+  - Make reasonable communication adjustments
+  - Establish preferences and obtain consent before personal care
+  - Support independence rather than taking over
+  - Recognise and respond immediately when consent is withdrawn
+  nmc_platforms:
+  - Being an accountable professional
+  - Assessing needs and planning care
+  - Providing and evaluating care
+clinical:
+  presenting_context: Requires some assistance with lower-body washing after reduced mobility
+  visible_at_start:
+  - Television is on and the door is open
+  - One hearing aid appears loose
+  - Mr Chen has a washcloth within reach
+  allergy_record: Not relevant to this personal-care scenario
+  prescribed_items: []
+  baseline_observations: {}
+initial_state:
+  elapsed_minutes: 0
+  noise_reduced: false
+  hearing_support_checked: false
+  privacy_created: false
+  preferences_checked: false
+  consent_state: not_asked
+  independence_supported: false
+  care_started: false
+  care_paused: false
+  revealed_cues: []
+time_events:
+- event_id: withdraw_consent
+  at_minute: 6
+  when:
+    care_started: true
+  effects:
+    consent_state: withdrawn
+  visible_cue: Mr Chen raises his hand and says, 'Stop a moment, please.'
+allowed_actions:
+- action_id: reduce_noise
+  label: Reduce background noise and face Mr Chen
+  preconditions: {}
+  effects:
+    noise_reduced: true
+  reveals: []
+- action_id: check_hearing_support
+  label: Ask whether Mr Chen wants help checking his hearing aid
+  preconditions: {}
+  effects:
+    hearing_support_checked: true
+  reveals:
+  - Mr Chen accepts help reseating the loose hearing aid
+- action_id: create_privacy
+  label: Close the door and prepare the private care space
+  preconditions: {}
+  effects:
+    privacy_created: true
+  reveals: []
+- action_id: check_preferences
+  label: Ask what Mr Chen wants to do independently
+  preconditions:
+    noise_reduced: true
+  effects:
+    preferences_checked: true
+    independence_supported: true
+  reveals:
+  - Mr Chen wants to wash his face and upper body himself
+  blocked_message: First make it easier for Mr Chen to hear the question.
+- action_id: seek_consent
+  label: Explain the proposed assistance and seek consent
+  preconditions:
+    privacy_created: true
+    preferences_checked: true
+  effects:
+    consent_state: accepted
+  reveals:
+  - Mr Chen agrees to limited assistance with lower-body care
+  blocked_message: Privacy and Mr Chen's preferences should be established first.
+- action_id: start_agreed_care
+  label: Begin only the assistance Mr Chen agreed to
+  preconditions:
+    consent_state: accepted
+  effects:
+    care_started: true
+  reveals: []
+  blocked_message: Valid consent has not been established.
+- action_id: pause_on_withdrawal
+  label: Stop care immediately and ask what Mr Chen needs
+  preconditions:
+    consent_state: withdrawn
+  effects:
+    care_paused: true
+  reveals:
+  - Mr Chen says the water feels too cold and wants a pause
+  blocked_message: This action becomes relevant only if consent is withdrawn.
+ai_contract:
+  allowed_context:
+  - Patient communication profile
+  - Environmental adjustments already made
+  - Privacy, preferences and consent states
+  - Currently revealed cues
+  - Student's exact words
+  may_generate:
+  - Patient dialogue
+  - Visible behaviour
+  - Requests
+  - Response latency
+  must_not_generate:
+  - Observations or observation values
+  - Diagnosis or new clinical facts
+  - Treatment recommendations or effects
+  - Consent where none was obtained
+  - Capacity assumptions
+  - New impairments or clinical facts
+  - Personal-care procedure instructions
+  - Judgement or grading of the student
+facilitator_only:
+  opening_brief: The learner is asked to support Mr Chen with morning personal care.
+  expected_safety_points:
+  - Hearing needs shape access, not cognition
+  - The patient controls how much assistance is provided
+  - Withdrawal of consent leads to an immediate pause
+  pause_triggers:
+  - Learner continues personal care after the withdrawal cue
+debrief:
+  prompts:
+  - Which environmental change most improved communication?
+  - How did you preserve independence during care?
+  - What should happen after consent is withdrawn?
+  automatic_competence_decision: false
+scenario_version: 1.0.0
+publication_status: development
+review:
+  status: pending_local_clinical_review
+  reviewer: ''
+  reviewed_at: ''
+dialogue:
+  opening_line: Sorry, I didn't catch that—the television is quite loud.
+  action_responses:
+    reduce_noise: That's much better. I can hear you when you face me like that.
+    check_hearing_support: Yes please—the left hearing aid feels loose.
+    create_privacy: Thank you for closing the door.
+    check_preferences: I can wash my face and upper body myself. I only need help lower down.
+    seek_consent: Yes, I agree to that amount of help.
+    start_agreed_care: All right, I'm ready to begin.
+    pause_on_withdrawal: Thank you for stopping. The water feels too cold; I need a moment.
+  fallback_responses:
+  - Please face me when you speak so I can follow you.
+  - Mr Chen waits for the background noise to settle before replying.
+  facts:
+  - fact: He wants to wash his face and upper body independently and needs help only with lower-body washing.
+    when: {}
+  - fact: He can hear more clearly when the speaker faces him and the background noise is reduced.
+    when:
+      noise_reduced: true
+  - fact: He has withdrawn consent because the water feels too cold and wants care to pause.
+    when:
+      consent_state: withdrawn

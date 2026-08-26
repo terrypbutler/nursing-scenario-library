@@ -1,0 +1,286 @@
+{
+  "case_id": "PAT-001",
+  "title": "Postoperative pain and treatment choice",
+  "synthetic_data_notice": "Entirely fictional training case",
+  "field": "adult nursing",
+  "setting": "orthopaedic ward",
+  "complexity": "introductory",
+  "estimated_duration_minutes": 15,
+  "patient": {
+    "display_name": "Eleanor Shaw",
+    "age": 67,
+    "pronouns": "she/her",
+    "preferred_address": "Mrs Shaw",
+    "communication_needs": [
+      "Uses reading glasses for written information"
+    ],
+    "explicit_preferences": [
+      "Wants to remain alert when her daughter visits",
+      "Would like options explained before deciding"
+    ],
+    "dialogue_style": "Polite, concise and initially cautious about strong pain relief"
+  },
+  "learning": {
+    "outcomes": [
+      "Undertake a person-centred pain assessment",
+      "Check the simulated prescription and allergy record before offering treatment",
+      "Explain options in understandable language and respect refusal",
+      "Reassess and communicate unresolved pain appropriately"
+    ],
+    "nmc_platforms": [
+      "Assessing needs and planning care",
+      "Providing and evaluating care",
+      "Improving safety and quality of care"
+    ]
+  },
+  "clinical": {
+    "presenting_context": "Day one after an uncomplicated simulated hip replacement",
+    "visible_at_start": [
+      "Lying still with a tense expression",
+      "Protects the operated side when moving",
+      "Able to speak in full sentences"
+    ],
+    "allergy_record": "No known medicine allergies recorded on the simulated chart",
+    "prescribed_items": [
+      {
+        "order_id": "SIM-PRN-ANALGESIA-01",
+        "display_text": "Educator-approved postoperative analgesia option",
+        "dose_source": "Read only from the simulated prescription chart"
+      }
+    ],
+    "baseline_observations": {
+      "respiratory_rate_per_min": 16,
+      "oxygen_saturation_percent": 97,
+      "oxygen_delivery": "room air",
+      "heart_rate_per_min": 88,
+      "blood_pressure_mmHg": "132/78",
+      "temperature_celsius": 36.8,
+      "alertness": "alert"
+    }
+  },
+  "initial_state": {
+    "elapsed_minutes": 0,
+    "identity_checked": false,
+    "allergies_checked": false,
+    "prescription_checked": false,
+    "pain_score_known": false,
+    "pain_score": 7,
+    "options_explained": false,
+    "consent_state": "not_asked",
+    "analgesia_administered": false,
+    "reassessed": false,
+    "trust": 45,
+    "revealed_cues": []
+  },
+  "time_events": [
+    {
+      "event_id": "pain_unaddressed",
+      "at_minute": 8,
+      "when": {
+        "analgesia_administered": false
+      },
+      "effects": {
+        "pain_score": 8,
+        "trust_delta": -5
+      },
+      "visible_cue": "Mrs Shaw shifts, grimaces and grips the bed sheet."
+    },
+    {
+      "event_id": "expected_reassessment",
+      "at_minute": 12,
+      "when": {
+        "analgesia_administered": true,
+        "reassessed": false
+      },
+      "effects": {},
+      "visible_cue": "Mrs Shaw looks towards the nurse as if expecting a review."
+    }
+  ],
+  "allowed_actions": [
+    {
+      "action_id": "check_identity",
+      "label": "Use two identifiers against the simulated record",
+      "preconditions": {},
+      "effects": {
+        "identity_checked": true
+      },
+      "reveals": []
+    },
+    {
+      "action_id": "assess_pain",
+      "label": "Ask about site, severity, character and effect of pain",
+      "preconditions": {},
+      "effects": {
+        "pain_score_known": true,
+        "trust_delta": 5
+      },
+      "reveals": [
+        "Current pain score is 7 out of 10",
+        "Pain is worse on movement"
+      ]
+    },
+    {
+      "action_id": "check_allergies_and_prescription",
+      "label": "Check the simulated allergy and prescription records",
+      "preconditions": {
+        "identity_checked": true
+      },
+      "effects": {
+        "allergies_checked": true,
+        "prescription_checked": true
+      },
+      "reveals": [
+        "SIM-PRN-ANALGESIA-01 is available on the simulated chart"
+      ],
+      "blocked_message": "The record cannot be safely matched until identity is checked."
+    },
+    {
+      "action_id": "explain_analgesia",
+      "label": "Explain the charted option and invite questions",
+      "preconditions": {
+        "prescription_checked": true,
+        "allergies_checked": true
+      },
+      "effects": {
+        "options_explained": true,
+        "trust_delta": 10
+      },
+      "reveals": [
+        "Mrs Shaw is worried that pain relief will make her too sleepy"
+      ],
+      "blocked_message": "The option must be verified against the simulated chart first."
+    },
+    {
+      "action_id": "seek_consent",
+      "label": "Ask whether Mrs Shaw wishes to accept the charted option",
+      "preconditions": {
+        "options_explained": true
+      },
+      "effects": {
+        "consent_state": "accepted"
+      },
+      "reveals": [
+        "Mrs Shaw agrees after her concern has been addressed"
+      ],
+      "blocked_message": "Mrs Shaw asks for an explanation before deciding."
+    },
+    {
+      "action_id": "administer_charted_option",
+      "label": "Record administration of the educator-approved charted option",
+      "preconditions": {
+        "identity_checked": true,
+        "allergies_checked": true,
+        "prescription_checked": true,
+        "consent_state": "accepted"
+      },
+      "effects": {
+        "analgesia_administered": true
+      },
+      "reveals": [],
+      "blocked_message": "Identity, allergy, prescription and consent checks must all be complete."
+    },
+    {
+      "action_id": "reassess_pain",
+      "label": "Reassess comfort and pain after the authored interval",
+      "preconditions": {
+        "analgesia_administered": true
+      },
+      "effects": {
+        "pain_score": 4,
+        "reassessed": true
+      },
+      "reveals": [
+        "Authored reassessment pain score is 4 out of 10"
+      ],
+      "blocked_message": "No simulated analgesia has been administered in this pathway."
+    }
+  ],
+  "ai_contract": {
+    "allowed_context": [
+      "Patient communication profile",
+      "Currently revealed cues",
+      "Current pain score only after it is revealed",
+      "Consent state",
+      "Student's exact words"
+    ],
+    "may_generate": [
+      "Patient dialogue",
+      "Emotion",
+      "Brief visible behaviour",
+      "Response latency"
+    ],
+    "must_not_generate": [
+      "Observations",
+      "Medicine names or doses",
+      "New allergies",
+      "Diagnosis or diagnoses",
+      "Treatment effects",
+      "Consent on the patient's behalf",
+      "Judgement or grading of the student"
+    ]
+  },
+  "facilitator_only": {
+    "opening_brief": "The learner is asked to assess Mrs Shaw's pain and respond to her concerns.",
+    "expected_safety_points": [
+      "Identity, allergy and prescription checks precede administration",
+      "Consent is informed and voluntary",
+      "Pain and response to intervention are reassessed"
+    ],
+    "pause_triggers": [
+      "Learner attempts administration despite refusal or missing checks"
+    ]
+  },
+  "debrief": {
+    "prompts": [
+      "What information influenced Mrs Shaw's decision?",
+      "How did you check understanding without pressuring her?",
+      "What would need documenting or communicating after reassessment?"
+    ],
+    "automatic_competence_decision": false
+  },
+  "scenario_version": "1.0.0",
+  "publication_status": "development",
+  "review": {
+    "status": "pending_local_clinical_review",
+    "reviewer": "",
+    "reviewed_at": ""
+  },
+  "dialogue": {
+    "opening_line": "It hurts more than I expected, but I don't want anything that will knock me out.",
+    "action_responses": {
+      "check_identity": "Of course. I'm Eleanor Shaw, and the details on my wristband are correct.",
+      "assess_pain": "It is about seven out of ten. It aches all the time and catches sharply when I try to move.",
+      "check_allergies_and_prescription": "Mrs Shaw watches while you check the simulated records.",
+      "explain_analgesia": "I was worried it might make me too sleepy when my daughter visits. If that concern is covered, I would consider it.",
+      "seek_consent": "Yes, I understand what you have explained and I would like to accept it.",
+      "administer_charted_option": "Thank you. I hope it makes moving a little easier.",
+      "reassess_pain": "It is nearer four now. It still hurts when I move, but it is more manageable."
+    },
+    "fallback_responses": [
+      "Can you explain what the next step would be?",
+      "I want to be involved in the decision."
+    ],
+    "facts": [
+      {
+        "fact": "Her current pain is 7 out of 10 and is worse on movement.",
+        "when": {}
+      },
+      {
+        "fact": "She is worried that stronger pain relief could make her too sleepy for her daughter's visit.",
+        "when": {}
+      },
+      {
+        "fact": "After a clear explanation that addresses her concern, she has chosen to accept the charted option.",
+        "when": {
+          "consent_state": "accepted"
+        }
+      },
+      {
+        "fact": "After the authored reassessment interval, her pain is 4 out of 10 and more manageable.",
+        "when": {
+          "reassessed": true
+        }
+      }
+    ]
+  }
+}

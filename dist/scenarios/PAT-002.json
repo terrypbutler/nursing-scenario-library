@@ -1,0 +1,250 @@
+{
+  "case_id": "PAT-002",
+  "title": "Acute confusion and a changing clinical picture",
+  "synthetic_data_notice": "Entirely fictional training case",
+  "field": "adult nursing",
+  "setting": "acute medical assessment unit",
+  "complexity": "intermediate",
+  "estimated_duration_minutes": 15,
+  "patient": {
+    "display_name": "David Morgan",
+    "age": 79,
+    "pronouns": "he/him",
+    "preferred_address": "David",
+    "communication_needs": [
+      "Allow one question at a time",
+      "Use short concrete sentences"
+    ],
+    "explicit_preferences": [
+      "Wants his glasses and clock within view"
+    ],
+    "dialogue_style": "Distractible, gives short answers and is uncertain where he is"
+  },
+  "learning": {
+    "outcomes": [
+      "Recognise acute change in cognition and physiological observations",
+      "Use calm, orienting communication without confrontation",
+      "Escalate concerns using the local approved process",
+      "Continue proportionate observation while awaiting help"
+    ],
+    "nmc_platforms": [
+      "Assessing needs and planning care",
+      "Improving safety and quality of care",
+      "Coordinating care"
+    ]
+  },
+  "clinical": {
+    "presenting_context": "Admitted with a suspected infection; normally independent and oriented according to the authored handover",
+    "visible_at_start": [
+      "Pulls intermittently at the bed cover",
+      "Looks around the unfamiliar room",
+      "Speech is understandable but attention drifts"
+    ],
+    "allergy_record": "Recorded allergy information is available on the simulated chart",
+    "prescribed_items": [],
+    "baseline_observations": {
+      "respiratory_rate_per_min": 22,
+      "oxygen_saturation_percent": 93,
+      "oxygen_delivery": "room air",
+      "heart_rate_per_min": 104,
+      "blood_pressure_mmHg": "102/64",
+      "temperature_celsius": 38.1,
+      "alertness": "new confusion"
+    }
+  },
+  "initial_state": {
+    "elapsed_minutes": 0,
+    "identity_checked": false,
+    "observations_measured": false,
+    "baseline_cognition_checked": false,
+    "senior_help_requested": false,
+    "urgent_escalation_completed": false,
+    "orientation_support_given": false,
+    "deterioration_stage": 0,
+    "revealed_cues": []
+  },
+  "time_events": [
+    {
+      "event_id": "unaddressed_deterioration",
+      "at_minute": 6,
+      "when": {
+        "urgent_escalation_completed": false
+      },
+      "effects": {
+        "deterioration_stage": 1
+      },
+      "visible_cue": "David becomes more drowsy and needs his name repeated before responding."
+    },
+    {
+      "event_id": "continued_deterioration",
+      "at_minute": 10,
+      "when": {
+        "urgent_escalation_completed": false
+      },
+      "effects": {
+        "deterioration_stage": 2
+      },
+      "visible_cue": "Breathing appears faster and David gives only one-word replies."
+    }
+  ],
+  "allowed_actions": [
+    {
+      "action_id": "check_identity",
+      "label": "Check identity against the simulated record",
+      "preconditions": {},
+      "effects": {
+        "identity_checked": true
+      },
+      "reveals": []
+    },
+    {
+      "action_id": "measure_observations",
+      "label": "Undertake the complete educator-authored observation set",
+      "preconditions": {
+        "identity_checked": true
+      },
+      "effects": {
+        "observations_measured": true
+      },
+      "reveals": [
+        "Reveal all baseline_observations exactly as authored"
+      ],
+      "blocked_message": "Match the patient to the simulated record first."
+    },
+    {
+      "action_id": "check_baseline_cognition",
+      "label": "Review handover and establish whether confusion is new",
+      "preconditions": {},
+      "effects": {
+        "baseline_cognition_checked": true
+      },
+      "reveals": [
+        "Authored handover reports David is normally oriented and independent"
+      ]
+    },
+    {
+      "action_id": "provide_orientation_support",
+      "label": "Use calm orientation and make glasses and clock available",
+      "preconditions": {},
+      "effects": {
+        "orientation_support_given": true
+      },
+      "reveals": [
+        "David briefly attends and states his preferred name"
+      ]
+    },
+    {
+      "action_id": "request_senior_help",
+      "label": "Ask an appropriate registered colleague for immediate review",
+      "preconditions": {},
+      "effects": {
+        "senior_help_requested": true
+      },
+      "reveals": [
+        "A colleague acknowledges the request"
+      ]
+    },
+    {
+      "action_id": "escalate_urgent_concern",
+      "label": "Use the local approved urgent escalation pathway",
+      "preconditions": {
+        "observations_measured": true
+      },
+      "effects": {
+        "urgent_escalation_completed": true
+      },
+      "reveals": [
+        "The receiving clinician asks for a structured handover"
+      ],
+      "blocked_message": "The learner needs an observation set to communicate the current physiological state."
+    }
+  ],
+  "ai_contract": {
+    "allowed_context": [
+      "Patient communication profile",
+      "Current deterioration stage",
+      "Currently revealed cues",
+      "Orientation support already provided",
+      "Student's exact words"
+    ],
+    "may_generate": [
+      "Patient dialogue",
+      "Confusion-consistent behaviour",
+      "Emotion",
+      "Response latency"
+    ],
+    "must_not_generate": [
+      "Observations or new observation values",
+      "Diagnosis or cause of confusion",
+      "Treatment recommendation",
+      "Clinical outcome",
+      "Capacity determination",
+      "Judgement or grading of the student"
+    ]
+  },
+  "facilitator_only": {
+    "opening_brief": "The learner has noticed that David appears different from the handover description.",
+    "expected_safety_points": [
+      "Treat new confusion as a clinical change",
+      "Obtain and communicate the authored observation set",
+      "Escalate promptly while maintaining respectful communication"
+    ],
+    "pause_triggers": [
+      "Learner leaves the deteriorating patient without arranging observation or assistance"
+    ]
+  },
+  "debrief": {
+    "prompts": [
+      "Which cues suggested an acute rather than established change?",
+      "How did communication support dignity while urgency increased?",
+      "What information would make the escalation concise and useful?"
+    ],
+    "automatic_competence_decision": false
+  },
+  "scenario_version": "1.0.0",
+  "publication_status": "development",
+  "review": {
+    "status": "pending_local_clinical_review",
+    "reviewer": "",
+    "reviewed_at": ""
+  },
+  "dialogue": {
+    "opening_line": "I was meant to be going home... Where is my coat?",
+    "action_responses": {
+      "check_identity": "David... David Morgan. Why am I in this room?",
+      "measure_observations": "David becomes distracted while the observations are completed.",
+      "check_baseline_cognition": "The authored handover confirms that this confusion is new.",
+      "provide_orientation_support": "Thank you. I can see the clock now. You said I'm in hospital?",
+      "request_senior_help": "David remains in view while the colleague acknowledges your request.",
+      "escalate_urgent_concern": "The receiving clinician asks you to give a concise structured handover."
+    },
+    "fallback_responses": [
+      "I'm not sure. Could you say that one part at a time?",
+      "David looks towards you, then becomes distracted by activity in the corridor."
+    ],
+    "facts": [
+      {
+        "fact": "He is unsure why he is in the room and is looking for his coat.",
+        "when": {}
+      },
+      {
+        "fact": "He can engage briefly when spoken to one question at a time and shown the clock.",
+        "when": {
+          "orientation_support_given": true
+        }
+      },
+      {
+        "fact": "He is becoming drowsier and needs his name repeated before responding.",
+        "when": {
+          "deterioration_stage": 1
+        }
+      },
+      {
+        "fact": "His speech is now limited to one-word replies because his breathing appears more difficult.",
+        "when": {
+          "deterioration_stage": 2
+        }
+      }
+    ]
+  }
+}

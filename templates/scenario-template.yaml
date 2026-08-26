@@ -1,0 +1,70 @@
+case_id: PAT-005
+scenario_version: 0.1.0
+publication_status: development
+review:
+  status: pending_local_clinical_review
+  reviewer: ""
+  reviewed_at: ""
+title: Replace with a short scenario title
+synthetic_data_notice: Entirely fictional training case
+field: adult nursing
+setting: simulated ward
+complexity: introductory
+estimated_duration_minutes: 15
+patient:
+  display_name: Fictional Patient
+  age: 60
+  pronouns: they/them
+  preferred_address: First name
+  communication_needs: []
+  explicit_preferences: []
+  dialogue_style: Calm, everyday UK English
+learning:
+  outcomes:
+    - Replace with an observable learning outcome
+  nmc_platforms: []
+clinical:
+  presenting_context: Replace with the learner-visible context
+  visible_at_start:
+    - Replace with a visible starting cue
+  baseline_observations: {}
+  prescribed_items: []
+initial_state:
+  elapsed_minutes: 0
+  revealed_cues: []
+  trust: 50
+time_events: []
+allowed_actions:
+  - action_id: introduce_self
+    label: Introduce yourself and confirm how the patient wishes to be addressed
+    preconditions: {}
+    effects:
+      trust_delta: 5
+    reveals: []
+dialogue:
+  opening_line: Hello. Are you the nurse looking after me?
+  action_responses:
+    introduce_self: Hello. Please call me by my first name.
+  fallback_responses:
+    - Could you ask me one question at a time, please?
+  facts:
+    - fact: The patient prefers to be addressed by their first name.
+      when: {}
+ai_contract:
+  allowed_context:
+    - Authored patient details and currently revealed cues
+  may_generate:
+    - Natural patient speech grounded in the authored facts
+  must_not_generate:
+    - New observations or observation values
+    - A diagnosis
+    - Treatment or clinical advice
+    - A judgement about learner competence
+facilitator_only:
+  notes:
+    - Replace with facilitator guidance
+debrief:
+  prompts:
+    - What went well in the interaction?
+    - What would you do differently next time?
+  automatic_competence_decision: false

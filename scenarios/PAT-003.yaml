@@ -1,0 +1,182 @@
+case_id: PAT-003
+title: Discharge understanding after a new stoma
+synthetic_data_notice: Entirely fictional training case
+field: adult nursing
+setting: colorectal surgical ward
+complexity: introductory
+estimated_duration_minutes: 20
+patient:
+  display_name: Aisha Khan
+  age: 54
+  pronouns: she/her
+  preferred_address: Aisha
+  communication_needs:
+  - Prefers short sections of information followed by time for questions
+  explicit_preferences:
+  - Wants personal-care discussions conducted with the curtain closed
+  - Would like her chosen family member involved only after she gives permission
+  dialogue_style: Warm but embarrassed; may agree quickly when overloaded
+learning:
+  outcomes:
+  - Create privacy and seek permission before a sensitive discussion
+  - Explore the person's priorities and concerns
+  - Use chunking and teach-back to check understanding
+  - Identify gaps that require review before discharge
+  nmc_platforms:
+  - Being an accountable professional
+  - Providing and evaluating care
+  - Coordinating care
+clinical:
+  presenting_context: Preparing for discharge after formation of a new simulated stoma
+  visible_at_start:
+  - Discharge leaflet remains folded on the bedside table
+  - Aisha says she is ready to go home
+  - She glances towards the open curtain before discussing care
+  allergy_record: Not relevant to this conversation scenario
+  prescribed_items: []
+  baseline_observations: {}
+initial_state:
+  elapsed_minutes: 0
+  privacy_created: false
+  permission_for_discussion: false
+  concerns_explored: false
+  information_chunked: false
+  teach_back_used: false
+  understanding_level: 1
+  overload_level: 2
+  family_permission: not_asked
+  revealed_cues: []
+time_events:
+- event_id: rushed_agreement
+  at_minute: 7
+  when:
+    information_chunked: false
+    teach_back_used: false
+  effects:
+    overload_level: 4
+  visible_cue: Aisha nods repeatedly but cannot describe the first step she would take at home.
+allowed_actions:
+- action_id: create_privacy
+  label: Create privacy for the discussion
+  preconditions: {}
+  effects:
+    privacy_created: true
+  reveals: []
+- action_id: seek_discussion_permission
+  label: Ask permission to discuss stoma care
+  preconditions:
+    privacy_created: true
+  effects:
+    permission_for_discussion: true
+  reveals:
+  - Aisha agrees to the discussion
+  blocked_message: Aisha looks towards the open curtain and asks for privacy first.
+- action_id: explore_concerns
+  label: Ask what matters most about managing at home
+  preconditions:
+    permission_for_discussion: true
+  effects:
+    concerns_explored: true
+    overload_level_delta: -1
+  reveals:
+  - Aisha is worried about leakage while outside the house
+- action_id: explain_in_chunks
+  label: Explain one authored care step at a time
+  preconditions:
+    permission_for_discussion: true
+  effects:
+    information_chunked: true
+    understanding_level_delta: 1
+  reveals:
+  - Use only educator-authored discharge content
+- action_id: use_teach_back
+  label: Ask Aisha to explain the plan in her own words
+  preconditions:
+    information_chunked: true
+  effects:
+    teach_back_used: true
+  reveals:
+  - Aisha recalls routine care but is unsure whom to contact about a problem
+  blocked_message: Provide a short, authored explanation before checking recall.
+- action_id: seek_family_permission
+  label: Ask whether Aisha wants her chosen family member involved
+  preconditions:
+    permission_for_discussion: true
+  effects:
+    family_permission: accepted
+  reveals:
+  - Aisha chooses to involve her sister in the final review
+- action_id: arrange_specialist_review
+  label: Arrange review by the appropriate specialist before discharge
+  preconditions:
+    teach_back_used: true
+  effects:
+    understanding_level_delta: 1
+  reveals:
+  - A specialist review is added to the simulated plan
+  blocked_message: First establish the specific gap in understanding.
+ai_contract:
+  allowed_context:
+  - Patient communication profile
+  - Currently revealed concerns
+  - Understanding and overload levels
+  - Privacy and family-permission states
+  - Student's exact words
+  may_generate:
+  - Patient dialogue
+  - Embarrassment or relief
+  - Visible behaviour
+  - Questions
+  must_not_generate:
+  - Observations or observation values
+  - Diagnosis or new clinical complications
+  - Treatment recommendations or effects
+  - Clinical stoma-care instructions
+  - Discharge clearance
+  - New complications
+  - Consent to involve family
+  - Judgement or grading of the student
+facilitator_only:
+  opening_brief: The learner is asked to check whether Aisha is ready for discharge education.
+  expected_safety_points:
+  - Privacy and consent precede the sensitive discussion
+  - Agreement is not treated as proof of understanding
+  - An identified knowledge gap leads to appropriate review
+  pause_triggers:
+  - Learner shares information with a family member without Aisha's permission
+debrief:
+  prompts:
+  - What was the difference between agreement and demonstrated understanding?
+  - How did privacy affect the conversation?
+  - Which concern changed the discharge teaching plan?
+  automatic_competence_decision: false
+scenario_version: 1.0.0
+publication_status: development
+review:
+  status: pending_local_clinical_review
+  reviewer: ''
+  reviewed_at: ''
+dialogue:
+  opening_line: They said I might go home today. I think I've understood everything.
+  action_responses:
+    create_privacy: Thank you. I didn't want everyone passing by to hear this.
+    seek_discussion_permission: Yes, we can talk about it now.
+    explore_concerns: I'm most worried about it leaking when I'm out. I keep saying I'm fine, but I don't
+      really know what I would do.
+    explain_in_chunks: That was easier to follow when we took one part at a time.
+    use_teach_back: I can explain the routine part, but I'm not sure who I should contact if something
+      goes wrong.
+    seek_family_permission: Yes, I would like my sister to join us for the final review.
+    arrange_specialist_review: That would reassure me before I go home.
+  fallback_responses:
+  - Could we take that slowly? I don't want to pretend I understand.
+  - Aisha listens, then glances at the folded leaflet.
+  facts:
+  - fact: She is worried about leakage when outside the house but may initially say she is fine.
+    when: {}
+  - fact: She can describe routine care but is unsure whom to contact if a problem occurs.
+    when:
+      teach_back_used: true
+  - fact: She has chosen to involve her sister in the final review.
+    when:
+      family_permission: accepted
