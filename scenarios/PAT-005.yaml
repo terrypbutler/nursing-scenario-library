@@ -1,0 +1,436 @@
+{
+  "case_id": "PAT-005",
+  "title": "Postoperative deterioration and escalation",
+  "synthetic_data_notice": "Entirely fictional training case",
+  "field": "adult nursing",
+  "setting": "surgical ward",
+  "complexity": "introductory",
+  "estimated_duration_minutes": 15,
+  "patient": {
+    "display_name": "George Malik",
+    "age": 72,
+    "pronouns": "he/him",
+    "preferred_address": "Mr Malik",
+    "communication_needs": [
+      "Normally wears hearing aids but only has one available; needs the learner to face him and speak clearly"
+    ],
+    "explicit_preferences": [
+      "Wants to be kept informed",
+      "Prefers calm and reassuring explanations"
+    ],
+    "dialogue_style": "Friendly and independent ordinarily, but currently anxious, tired and worried that something is wrong",
+    "nonverbal_palette": [
+      "Mr Malik looks pale and sits upright in bed, breathing visibly faster than before.",
+      "He shifts restlessly and glances toward the call bell.",
+      "He watches the learner closely to catch what is being said, leaning slightly forward."
+    ]
+  },
+  "learning": {
+    "outcomes": [
+      "Recognise signs of patient deterioration and complete an appropriate initial assessment",
+      "Communicate calmly, addressing the patient's hearing needs and obtaining consent",
+      "Obtain and record simulated observations accurately",
+      "Escalate concerns promptly and provide a clear, structured handover"
+    ],
+    "nmc_platforms": [
+      "Assessing needs and planning care",
+      "Providing and evaluating care",
+      "Improving safety and quality of care"
+    ]
+  },
+  "prebrief": {
+    "role": "You are the student nurse responding to Mr Malik on the surgical ward.",
+    "orientation": "Work as you would in a supervised ward encounter. Describe physical actions and write the exact words you would use.",
+    "resources": [
+      "Synthetic handover and bedside environment",
+      "Simulated observation chart and nursing notes workspace",
+      "Local escalation process reference"
+    ],
+    "limitations": [
+      "No physical equipment is operated in this text prototype",
+      "All clinical values remain educator-authored fictional observations",
+      "AI wording can vary, but clinical facts and effects cannot"
+    ],
+    "ground_rules": [
+      "Pause if you feel uncomfortable and use the debrief for questions",
+      "Treat the patient as a person rather than trying to guess keywords",
+      "This is formative rehearsal, not an automatic competence assessment"
+    ]
+  },
+  "clinical": {
+    "presenting_context": "Day two after uncomplicated abdominal surgery",
+    "visible_at_start": [
+      "Sitting upright in bed looking pale",
+      "Breathing more quickly than expected",
+      "Alert, anxious and complaining of feeling dizzy and unwell"
+    ],
+    "allergy_record": "No known medicine allergies recorded on the simulated chart",
+    "prescribed_items": [
+      {
+        "order_id": "SIM-OBS-CHART-01",
+        "display_text": "Educator-approved routine observation chart",
+        "dose_source": "Read only from the simulated prescription chart"
+      }
+    ],
+    "baseline_observations": {
+      "respiratory_rate_per_min": 24,
+      "oxygen_saturation_percent": 93,
+      "oxygen_delivery": "room air",
+      "heart_rate_per_min": 110,
+      "blood_pressure_mmHg": "102/64",
+      "temperature_celsius": 37.5,
+      "alertness": "alert"
+    }
+  },
+  "clinical_workspace": {
+    "handover": "Mr Malik is day two following uncomplicated abdominal surgery. Recovery had previously been straightforward, but he is now reporting feeling dizzy and unwell.",
+    "environment": [
+      "Call bell is within reach",
+      "Nursing notes and observation chart are available at the bedside",
+      "Mr Malik is sitting upright in bed"
+    ],
+    "available_resources": [
+      "Simulated identification record",
+      "Simulated observation chart",
+      "Nursing notes workspace",
+      "Local escalation process guide"
+    ],
+    "record_access": [
+      {
+        "title": "Observation chart",
+        "state_key": "observations_recorded",
+        "content": "Simulated vital signs: RR 24/min, SpO2 93% on room air, HR 110/min, BP 102/64 mmHg, Temp 37.5C."
+      }
+    ]
+  },
+  "initial_state": {
+    "elapsed_minutes": 0,
+    "identity_checked": false,
+    "allergies_checked": false,
+    "prescription_checked": false,
+    "pain_score_known": false,
+    "pain_score": 7,
+    "options_explained": false,
+    "consent_state": "not_asked",
+    "analgesia_administered": false,
+    "reassessed": false,
+    "trust": 50,
+    "emotion_state": "anxious",
+    "fatigue_level": 3,
+    "overload_level": 2,
+    "understanding_level": 2,
+    "confusion_level": 0,
+    "dignity_state": "preserved",
+    "revealed_cues": [],
+    "assessment_completed": false,
+    "observations_recorded": false,
+    "escalated": false
+  },
+  "time_events": [
+    {
+      "event_id": "delayed_response",
+      "at_minute": 6,
+      "when": {
+        "escalated": false
+      },
+      "effects": {
+        "trust_delta": -10,
+        "fatigue_level_delta": 1,
+        "emotion_state": "increasingly_distressed"
+      },
+      "visible_cue": "Mr Malik looks more anxious, rubs his forehead and asks why nobody is helping him."
+    },
+    {
+      "event_id": "post_escalation_relief",
+      "at_minute": 10,
+      "when": {
+        "escalated": true
+      },
+      "effects": {
+        "trust_delta": 15,
+        "emotion_state": "reassured"
+      },
+      "visible_cue": "Mr Malik relaxes his shoulders, visibly reassured that help has been arranged."
+    }
+  ],
+  "allowed_actions": [
+    {
+      "action_id": "check_identity",
+      "label": "Confirm identity using two identifiers against the simulated record",
+      "preconditions": {},
+      "effects": {
+        "identity_checked": true,
+        "trust_delta": 5
+      },
+      "reveals": []
+    },
+    {
+      "action_id": "address_hearing_and_explain",
+      "label": "Face the patient, speak clearly, introduce yourself and explain what you are doing",
+      "preconditions": {
+        "identity_checked": true
+      },
+      "effects": {
+        "trust_delta": 5,
+        "understanding_level_delta": 1,
+        "emotion_state": "somewhat_calmed"
+      },
+      "reveals": [
+        "Mr Malik acknowledges your presence and appreciates you speaking clearly to accommodate his missing hearing aid."
+      ],
+      "blocked_message": "Identity checks should be completed first."
+    },
+    {
+      "action_id": "assess_condition",
+      "label": "Ask what has changed and conduct an initial assessment of his symptoms",
+      "preconditions": {
+        "identity_checked": true
+      },
+      "effects": {
+        "assessment_completed": true,
+        "trust_delta": 5,
+        "emotion_state": "listened_to"
+      },
+      "reveals": [
+        "Mr Malik reports feeling dizzy, lightheaded and unusually breathless."
+      ],
+      "blocked_message": "Please confirm identity before starting the clinical assessment."
+    },
+    {
+      "action_id": "obtain_observations",
+      "label": "Obtain and record simulated vital signs on the observation chart",
+      "preconditions": {
+        "assessment_completed": true
+      },
+      "effects": {
+        "observations_recorded": true
+      },
+      "reveals": [
+        "Simulated observations show elevated heart rate and respiratory rate with reduced oxygen saturation."
+      ],
+      "blocked_message": "An initial assessment of symptoms should precede full observation recording."
+    },
+    {
+      "action_id": "seek_consent",
+      "label": "Seek consent before proceeding with further checks and escalation steps",
+      "preconditions": {
+        "assessment_completed": true
+      },
+      "effects": {
+        "consent_state": "accepted",
+        "trust_delta": 5
+      },
+      "reveals": [
+        "Mr Malik agrees to let you call for medical assistance."
+      ],
+      "blocked_message": "Assessment must take place before seeking consent for escalation."
+    },
+    {
+      "action_id": "escalate_concerns",
+      "label": "Escalate concerns promptly and provide a structured handover",
+      "preconditions": {
+        "observations_recorded": true,
+        "consent_state": "accepted"
+      },
+      "effects": {
+        "escalated": true,
+        "trust_delta": 10
+      },
+      "reveals": [
+        "Senior support and review have been successfully requested following the local escalation process."
+      ],
+      "blocked_message": "Observations must be recorded and consent obtained before escalating."
+    }
+  ],
+  "ai_contract": {
+    "allowed_context": [
+      "Patient communication profile",
+      "Currently revealed cues",
+      "Consent state",
+      "Bounded patient-experience state",
+      "Student's exact words"
+    ],
+    "allowed_state_keys": [
+      "identity_checked",
+      "assessment_completed",
+      "observations_recorded",
+      "consent_state",
+      "escalated",
+      "trust",
+      "emotion_state",
+      "fatigue_level",
+      "overload_level",
+      "understanding_level",
+      "confusion_level",
+      "dignity_state"
+    ],
+    "may_generate": [
+      "Patient dialogue",
+      "Emotion",
+      "Brief visible behaviour",
+      "Response latency"
+    ],
+    "must_not_generate": [
+      "Observations",
+      "Medicine names or doses",
+      "New allergies",
+      "Diagnosis or diagnoses",
+      "Treatment effects",
+      "Consent on the patient's behalf",
+      "Judgement or grading of the student"
+    ]
+  },
+  "facilitator_only": {
+    "opening_brief": "The learner is asked to assess Mr Malik, manage his communication needs, record observations and escalate his deterioration appropriately.",
+    "expected_safety_points": [
+      "Identity is confirmed prior to formal assessment",
+      "Communication accommodates the patient's hearing impairment",
+      "Observations are recorded accurately and escalation occurs promptly"
+    ],
+    "pause_triggers": [
+      "Learner leaves the patient alone without arranging support or ignores obvious signs of deterioration"
+    ]
+  },
+  "educator_rubric": [
+    {
+      "criterion_id": "recognition_and_assessment",
+      "label": "Recognition of deterioration and assessment",
+      "guidance": "Promptly identifies that Mr Malik's condition has changed and completes an appropriate initial assessment."
+    },
+    {
+      "criterion_id": "communication_and_consent",
+      "label": "Communication, dignity and consent",
+      "guidance": "Adapts communication for hearing needs, maintains dignity, explains actions and obtains consent."
+    },
+    {
+      "criterion_id": "escalation_and_handover",
+      "label": "Observation recording and escalation",
+      "guidance": "Accurately records observations and escalates concerns promptly using a structured handover."
+    }
+  ],
+  "debrief": {
+    "prompts": [
+      "What first suggested a change in Mr Malik's condition?",
+      "How did you balance assessment with escalation?",
+      "How did his hearing needs affect your communication?",
+      "What information was most important in your handover?"
+    ],
+    "automatic_competence_decision": false
+  },
+  "scenario_version": "1.0.0",
+  "publication_status": "development",
+  "review": {
+    "status": "pending_local_clinical_review",
+    "reviewer": "",
+    "reviewed_at": ""
+  },
+  "dialogue": {
+    "opening_line": "I'm glad you're here. I feel really dizzy and my chest feels a bit tight, and something just isn't right.",
+    "action_responses": {
+      "check_identity": "Yes, my name is George Malik, and my details on the band are right.",
+      "assess_pain": "It is about seven out of ten. It aches all the time and catches sharply when I try to move.",
+      "check_allergies_and_prescription": "Mrs Shaw watches while you check the simulated records.",
+      "explain_analgesia": "I was worried it might make me too sleepy when my daughter visits. If that concern is covered, I would consider it.",
+      "seek_consent": "Yes, please do whatever is needed to check me over and get help.",
+      "administer_charted_option": "Thank you. I hope it makes moving a little easier.",
+      "reassess_pain": "It is nearer four now. It still hurts when I move, but it is more manageable.",
+      "address_hearing_and_explain": "Thank you for speaking clearly where I can see you. It's hard to catch everything with only one hearing aid working.",
+      "assess_condition": "I just feel very lightheaded and unwell since I sat up. My breathing feels faster than normal.",
+      "obtain_observations": "Mr Malik cooperates quietly while you record his observations.",
+      "escalate_concerns": "Thank you for getting someone. I feel a bit safer knowing help is on the way."
+    },
+    "fallback_responses": [
+      "Could you repeat that? It's hard to hear when you look away.",
+      "I am feeling quite anxious and would like to know what is happening."
+    ],
+    "facts": [
+      {
+        "fact": "Mr Malik reports feeling dizzy, lightheaded and unusually breathless.",
+        "when": {}
+      },
+      {
+        "fact": "His hearing needs are accommodated by speaking clearly while facing him.",
+        "when": {}
+      },
+      {
+        "fact": "Observations indicate physiological deterioration requiring prompt escalation.",
+        "when": {}
+      }
+    ],
+    "action_phrases": {
+      "check_identity": [
+        "check identity",
+        "confirm identity",
+        "check wristband",
+        "two identifiers"
+      ],
+      "assess_pain": [
+        "assess pain",
+        "ask about pain",
+        "pain assessment",
+        "pain score"
+      ],
+      "check_allergies_and_prescription": [
+        "check allergies",
+        "check allergy record",
+        "check prescription",
+        "check medication chart",
+        "check medicine chart",
+        "check drug chart"
+      ],
+      "explain_analgesia": [
+        "explain analgesia",
+        "explain pain relief",
+        "discuss pain relief",
+        "explain charted option",
+        "invite questions"
+      ],
+      "seek_consent": [
+        "seek consent",
+        "ask permission",
+        "gain consent",
+        "obtain consent"
+      ],
+      "administer_charted_option": [
+        "administer charted option",
+        "administer analgesia",
+        "give pain relief",
+        "give analgesia",
+        "record administration"
+      ],
+      "reassess_pain": [
+        "reassess pain",
+        "review pain",
+        "check pain again",
+        "recheck pain",
+        "reassess comfort"
+      ],
+      "address_hearing_and_explain": [
+        "address hearing",
+        "speak clearly",
+        "face patient",
+        "introduce yourself",
+        "explain what is happening"
+      ],
+      "assess_condition": [
+        "assess condition",
+        "ask what has changed",
+        "initial assessment",
+        "assess symptoms"
+      ],
+      "obtain_observations": [
+        "obtain observations",
+        "record observations",
+        "take vital signs",
+        "check observations"
+      ],
+      "escalate_concerns": [
+        "escalate",
+        "escalate concerns",
+        "handover",
+        "call for help",
+        "arrange assistance"
+      ]
+    }
+  }
+}
